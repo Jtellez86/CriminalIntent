@@ -26,6 +26,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
     public static final String CRIME_ID_ARG = "CRIME_ID_ARG";
     public static final String DIALOG_DATE = "DialogDate";
+    public static final String DIALOG_TIME = "DialogTime";
     public static final int REQUEST_DATE = 0;
 
     private Crime crime;
@@ -96,14 +97,14 @@ public class CrimeFragment extends Fragment {
 
         timeButton = (Button) view.findViewById(R.id.crime_time);
         updateTime();
-//        timeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DatePickerFragment datePickerFragment = new DatePickerFragment().newInstance(crime.getDate());
-//                datePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-//                datePickerFragment.show(getFragmentManager(), DIALOG_DATE);
-//            }
-//        });
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerFragment timePickerFragment = new TimePickerFragment().newInstance(crime.getDate());
+                //timePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                timePickerFragment.show(getFragmentManager(), DIALOG_TIME);
+            }
+        });
 
         final CheckBox solved = (CheckBox) view.findViewById(R.id.solved);
         solved.setChecked(crime.isSolved());
