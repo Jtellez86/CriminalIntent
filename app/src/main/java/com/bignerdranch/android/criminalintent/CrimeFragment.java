@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -28,6 +29,7 @@ public class CrimeFragment extends Fragment {
     public static final String DIALOG_DATE = "DialogDate";
     public static final String DIALOG_TIME = "DialogTime";
     public static final int REQUEST_DATE = 0;
+    public static final int REQUEST_TIME = 1;
 
     private Crime crime;
     private CrimeLab crimeLab;
@@ -54,6 +56,12 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             crime.setDate(date);
             updateDate();
+        }
+
+        if(requestCode == REQUEST_TIME) {
+            Date date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            crime.setDate(date);
+            updateTime();
         }
     }
 
@@ -101,7 +109,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 TimePickerFragment timePickerFragment = new TimePickerFragment().newInstance(crime.getDate());
-                //timePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                timePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
                 timePickerFragment.show(getFragmentManager(), DIALOG_TIME);
             }
         });
