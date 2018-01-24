@@ -38,4 +38,6 @@ public class CrimeLab {
     public List<Crime> getCrimes() {
         return new ArrayList<>(crimes.values());    
     }
+
+    public void deleteCrime(UUID id) {crimes.remove(id);}
 }

@@ -106,11 +106,11 @@ public class CrimeListFragment extends Fragment {
             if(crimePosition < 0) {
                 adapter.notifyDataSetChanged();
             } else {
+                adapter.setCrimes(crimeLab.getCrimes());
                 adapter.notifyItemChanged(crimePosition);
                 crimePosition = -1;
             }
         }
-
         updateSubtitle();
     }
 
@@ -209,6 +209,10 @@ public class CrimeListFragment extends Fragment {
         private List<Crime> crimes;
 
         public CrimeAdapter(List<Crime> crimes) {
+            this.crimes = crimes;
+        }
+
+        public void setCrimes(List<Crime> crimes) {
             this.crimes = crimes;
         }
 

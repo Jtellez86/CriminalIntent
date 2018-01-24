@@ -10,6 +10,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,6 +50,14 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        crimeLab = CrimeLab.get();
+        crime = crimeLab.getCrime((UUID)getArguments().getSerializable(CRIME_ID_ARG));
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != Activity.RESULT_OK) {
             return;
@@ -63,13 +74,6 @@ public class CrimeFragment extends Fragment {
             crime.setDate(date);
             updateTime();
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        crimeLab = CrimeLab.get();
-        crime = crimeLab.getCrime((UUID)getArguments().getSerializable(CRIME_ID_ARG));
     }
 
     @Nullable
@@ -120,6 +124,25 @@ public class CrimeFragment extends Fragment {
         solved.setOnCheckedChangeListener(setIsSolvedOnCheckedListener());
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.delete_crime:
+                CrimeLab.get().deleteCrime(crime.getId());
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     private void determineTitleText() {
