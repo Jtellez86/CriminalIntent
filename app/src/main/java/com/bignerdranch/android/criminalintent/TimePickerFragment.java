@@ -54,7 +54,7 @@ public class TimePickerFragment extends DialogFragment {
         timePicker.setMinute(min);
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.crime_title)
+                .setTitle(R.string.time_picker_title)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

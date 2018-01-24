@@ -14,14 +14,10 @@ public class CrimeLab {
 
     private CrimeLab() {
         crimes = new LinkedHashMap<>();
+    }
 
-        for(int i = 0; i<100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0);
-            crime.setRequiresPolice(i % 10 == 0);
-            crimes.put(crime.getId(), crime);
-        }
+    public void addCrime(Crime crime) {
+        crimes.put(crime.getId(), crime);
     }
 
     public static CrimeLab get() {
