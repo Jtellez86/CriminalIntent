@@ -78,7 +78,8 @@ public class CrimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime, container, false);
 
         titleField = (EditText) view.findViewById(R.id.crime_title);
-        titleField.setText(crime.getTitle());
+        determineTitleText();
+
         titleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -119,6 +120,17 @@ public class CrimeFragment extends Fragment {
         solved.setOnCheckedChangeListener(setIsSolvedOnCheckedListener());
 
         return view;
+    }
+
+    private void determineTitleText() {
+        String title = crime.getTitle();
+
+        if(title == null) {
+            title = String.format("Crime %s", crimeLab.getCrimes().size());
+        }
+
+        crime.setTitle(title);
+        titleField.setText(title);
     }
 
     private void updateTime() {
