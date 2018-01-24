@@ -25,6 +25,7 @@ import static android.view.View.*;
 
 
 public class CrimeListFragment extends Fragment {
+    public static final String SUBTITLE_VISIBILITY = "SUBTITLE_VISIBILITY";
     RecyclerView crimeRecyclerView;
     CrimeAdapter adapter;
     private boolean subtitleVisible;
@@ -33,7 +34,17 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            subtitleVisible = savedInstanceState.getBoolean(SUBTITLE_VISIBILITY);
+        }
+
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SUBTITLE_VISIBILITY, subtitleVisible);
     }
 
     @Nullable
