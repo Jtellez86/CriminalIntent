@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import static android.view.View.*;
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
 
 
 public class CrimeListFragment extends Fragment {
@@ -81,7 +83,7 @@ public class CrimeListFragment extends Fragment {
         switch(item.getItemId()){
             case R.id.new_crime:
                 Crime crime = new Crime();
-                CrimeLab.get().addCrime(crime);
+                CrimeLab.get(getContext()).addCrime(crime);
                 Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
                 startActivity(intent);
                 return true;
@@ -97,7 +99,8 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.get();
+        CrimeLab crimeLab = CrimeLab.get(getContext());
+        List<Crime> crimes = crimeLab.getCrimes();
 
         if (adapter == null) {
             adapter = new CrimeAdapter(crimeLab.getCrimes());
@@ -106,16 +109,15 @@ public class CrimeListFragment extends Fragment {
             if(crimePosition < 0) {
                 adapter.notifyDataSetChanged();
             } else {
-                adapter.setCrimes(crimeLab.getCrimes());
+                adapter.setCrimes(crimes);
                 adapter.notifyItemChanged(crimePosition);
-                crimePosition = -1;
             }
         }
         updateSubtitle();
     }
 
     private void updateSubtitle() {
-        CrimeLab crimeLab = CrimeLab.get();
+        CrimeLab crimeLab = CrimeLab.get(getContext());
         String subtitle = getString(R.string.subtitle_format, crimeLab.getCrimes().size());
 
         if(!subtitleVisible){

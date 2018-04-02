@@ -21,8 +21,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -52,9 +50,15 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        crimeLab = CrimeLab.get();
+        crimeLab = CrimeLab.get(getContext());
         crime = crimeLab.getCrime((UUID)getArguments().getSerializable(CRIME_ID_ARG));
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.get(getActivity()).updateCrime(crime);
     }
 
     @Override
@@ -136,7 +140,7 @@ public class CrimeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.delete_crime:
-                CrimeLab.get().deleteCrime(crime.getId());
+                CrimeLab.get(getContext()).deleteCrime(crime.getId());
                 getActivity().finish();
                 return true;
             default:
